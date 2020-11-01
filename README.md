@@ -22,3 +22,18 @@ This is used to make the changes to the database persistent. (https://stackoverf
 To use the container, run ```docker-compose up -d```. Now you can interact with the data using Django and at localhost:5555 and both the username and password is postgres.
 I would also recommend installing pgadmin4 (provides gui).
 
+Useful and Common Django Commands:
+
+python manage.py runserver - runs the web server so you can view the site
+
+python manage.py shell - allows you to view your database tables and the data within them
+
+python manage.py startapp app_name - creates a new app in your project called app_name
+
+To save edits to the database (creating or editing a database table), always run (in this order):
+1. python manage.py makemigrations
+2. python manage.py migrate
+
+
+
+

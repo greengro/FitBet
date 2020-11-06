@@ -1,32 +1,26 @@
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
-from users.forms import CustomUserCreationForm
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 
 
-# TODO rename
+
+def home(request):
+    return render(request, "users/home.html")
+
+
 def dashboard(request):
     return render(request, "users/dashboard.html")
 
 
 def register(request):
-    if request.method == "GET":
-        return render(
-            request, "users/register.html",
-            {"form": CustomUserCreationForm}
-        )
-    elif request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-
-        print('got the form')
-
-        # TODO for some reason the form is always invalid (adding form validation feedback would help)
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
         if form.is_valid():
-            print('the form was valid')
-
-            user = form.save()
-            login(request, user)
-
-            # this was in the tutorial but I moved up to make sure always rendering
-            # return redirect(reverse("dashboard"))
-
-        return redirect("/dashboard")
+            username = form.cleaned_data.get('username')
+            form.save()
+            messages.success(request, f'Welcome, {username}, your account was created! Please login now')
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'users/register.html', {'form': form})

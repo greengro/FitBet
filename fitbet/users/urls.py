@@ -1,8 +1,11 @@
-from users.views import dashboard, register
+from users.views import dashboard, register, home
 from django.urls import path, include, re_path
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
-    re_path(r"^dashboard/", dashboard, name="dashboard"),
-    path('accounts/', include('django.contrib.auth.urls')),
-    re_path(r"^register/", register, name="register"),
+    path("dashboard/", dashboard, name="dashboard"),
+    path("", home, name="home"),
+    path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('register/', register, name='register')
 ]

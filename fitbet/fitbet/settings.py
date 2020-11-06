@@ -36,6 +36,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'users',
+    'bets',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -81,12 +82,14 @@ WSGI_APPLICATION = 'fitbet.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'fitbet',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'localhost',
-        'PORT': '5555',
+        #PUT YOUR MYSQL USERNAME AND PASSWORD HERE
+        'USER': 'root',
+        'PASSWORD': 'password',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTION': {'init_command':"SET sql_mode='STRICT_TRANS_TABLE',"},
     }
 }
 

@@ -82,14 +82,13 @@ WSGI_APPLICATION = 'fitbet.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'fitbet',
         #PUT YOUR MYSQL USERNAME AND PASSWORD HERE
-        'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'OPTION': {'init_command':"SET sql_mode='STRICT_TRANS_TABLE',"},
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5555'
     }
 }
 

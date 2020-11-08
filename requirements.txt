@@ -1,0 +1,17 @@
+appdirs==1.4.4
+asgiref==3.2.10
+certifi==2020.6.20
+distlib==0.3.1
+Django==3.1.2
+django-crispy-forms==1.9.2
+filelock==3.0.12
+importlib-metadata==2.0.0
+mysqlclient==2.0.1
+pipenv==2020.8.13
+psycopg2==2.8.6
+pytz==2020.1
+six==1.15.0
+sqlparse==0.4.1
+virtualenv==20.1.0
+virtualenv-clone==0.5.4
+zipp==3.4.0

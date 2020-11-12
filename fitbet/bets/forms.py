@@ -26,7 +26,5 @@ class CreateUserBet(ModelForm):
 
         if amount <= 0:
             raise ValidationError("Non-positive number of steps")
-        elif ...:
-            raise ValidationError("Betting more than you have")
 
         return amount

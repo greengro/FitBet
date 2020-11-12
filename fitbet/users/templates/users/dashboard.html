@@ -3,5 +3,14 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-Hello, {{ user.username|default:'Guest' }}!
+    Hello, {{ user.username|default:'Guest' }}!
+    {% for obj in bets %}
+        <h2>{{ obj.title }}</h2>
+        <h3>{{ obj.description }}</h3>
+        <form action="/createUserBet/{{ obj.id }}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+    {% endfor %}
 {% endblock %}

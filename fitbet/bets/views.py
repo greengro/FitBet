@@ -2,7 +2,9 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from .forms import CreateBet, CreateUserBet
 from .models import Bet, UserBet
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def create_bet(request):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -19,7 +21,7 @@ def create_bet(request):
 
     return render(request, 'create_bet.html', {'form': form})
 
-
+@login_required
 def create_userbet(request, bet_id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':

@@ -5,6 +5,14 @@
 {% block content %}
     Hello, {{ user.username|default:'Guest' }}!
     {% for obj in bets %}
+        <style>
+            h2 {
+                font-size:18px;
+            }
+            h3 {
+                font-size:14px;
+            }
+        </style>
         <h2>{{ obj.title }}</h2>
         <h3>{{ obj.description }}</h3>
         <form action="/createUserBet/{{ obj.id }}" method="post">

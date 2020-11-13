@@ -8,6 +8,9 @@ from bets.forms import CreateUserBet
 def home(request):
     return render(request, "users/home.html")
 
+def profile(request):
+    return render(request, "users/profile.html")
+
 
 def dashboard(request):
     all_bets = Bet.objects.all()

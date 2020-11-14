@@ -4,13 +4,15 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from bets.models import Bet
 from bets.forms import CreateUserBet
+from bets.models import UserBet
 
 def home(request):
     return render(request, "users/home.html")
 
 def profile(request):
     owned_bets = Bet.objects.filter(bet_owner_user_id=1)
-    return render(request, "users/profile.html", {'bets': owned_bets} )
+    placed_bets = UserBet.objects.filter(user_id=1)
+    return render(request, "users/profile.html", {'bets': owned_bets, 'placed': placed_bets})
 
 
 def dashboard(request):

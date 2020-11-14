@@ -1,13 +1,25 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<h1>This is your profile page!</h1>
 
-    <h1>Hello, {{ user.username|default:'Guest' }}!  </h1>
+    <h1>Hello, {{ user.username|default:'Guest' }} this is your profile page!  </h1>
+
+    <h4>Bets that you have created </h4>
     {% for obj in bets %}
         <style>
+        label {
+          background-color: lightblue;
+          width: 200px;
+          padding: 25px;
+        }
+         &::before {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 0.5em;
+         }
+        </style>
+        <style>
             h2 {
-                background: #fafafa;
                 color: #333333;
                 margin-top: 3rem;
                 font-size:18px;
@@ -16,11 +28,20 @@
                 font-size:14px;
             }
         </style>
+<label>
         <h2>{{ obj.title }}</h2>
         <h3>{{ obj.description }}</h3>
-
-
+</label>
 
     {% endfor %}
+
+    <h4>Bets that you are betting on </h4>
+    {% for obj in placed %}
+
+        <h2>{{ obj.amount_bet }}</h2>
+
+    {% endfor %}
+
+
 
 {% endblock %}

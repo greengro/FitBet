@@ -42,6 +42,18 @@
 
     {% endfor %}
 
+    <h4>Bets that you are betting on info attempt </h4>
+    {% for obj in placed_desc %}
+
+        <h2>{{ obj.title }}</h2>
+
+        <h3>{{ obj.description }}</h3>
+
+        <h2>{{ obj.amount_bet }}</h2>
+
+
+    {% endfor %}
+
 
 
 {% endblock %}

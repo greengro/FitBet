@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.db.models import Prefetch
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -12,7 +13,8 @@ def home(request):
 def profile(request):
     owned_bets = Bet.objects.filter(bet_owner_user_id=1)
     placed_bets = UserBet.objects.filter(user_id=1)
-    return render(request, "users/profile.html", {'bets': owned_bets, 'placed': placed_bets})
+    queryset = Bet.objects.prefetch_related(Prefetch('bet_owner_user_id', queryset=UserBet.objects.filter(user_id=1)))
+    return render(request, "users/profile.html", {'bets': owned_bets, 'placed': placed_bets, 'placed_desc': queryset})
 
 
 def dashboard(request):

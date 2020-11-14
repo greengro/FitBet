@@ -1,55 +1,54 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
+    <style>
+        label {
+          background-color: lightblue;
+          width: 200px;
+          padding: 25px;
+         }
+         h2 {
+            color: #333333;
+            margin-top: 3rem;
+            font-size:18px;
+         }
+        h3 {
+            font-size:14px;
+        }
+        h4 {
+            color: #5f788a;
+        }
+    </style>
 
     <h1>Hello, {{ user.username|default:'Guest' }} this is your profile page!  </h1>
 
     <h4>Bets that you have created </h4>
     {% for obj in bets %}
-        <style>
-        label {
-          background-color: lightblue;
-          width: 200px;
-          padding: 25px;
-        }
-         &::before {
-            display: inline-block;
-            vertical-align: middle;
-            margin: 0 0.5em;
-         }
-        </style>
-        <style>
-            h2 {
-                color: #333333;
-                margin-top: 3rem;
-                font-size:18px;
-            }
-            h3 {
-                font-size:14px;
-            }
-        </style>
-<label>
+
+
+    <label>
         <h2>{{ obj.title }}</h2>
         <h3>{{ obj.description }}</h3>
-</label>
+    </label>
 
     {% endfor %}
 
     <h4>Bets that you are betting on </h4>
     {% for obj in placed %}
 
-        <h2>{{ obj.amount_bet }}</h2>
+    <h2>{{ obj.amount_bet }}</h2>
 
     {% endfor %}
 
     <h4>Bets that you are betting on info attempt </h4>
+
     {% for obj in placed_desc %}
 
-        <h2>{{ obj.title }}</h2>
+    <h2>{{ obj.title }}</h2>
 
-        <h3>{{ obj.description }}</h3>
+    <h3>{{ obj.description }}</h3>
 
-        <h2>{{ obj.amount_bet }}</h2>
+    <h2>{{ obj.amount_bet }}</h2>
 
 
     {% endfor %}

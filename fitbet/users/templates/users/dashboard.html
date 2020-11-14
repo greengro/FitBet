@@ -3,20 +3,24 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
+    <style>
+         h2 {
+            color: #5f788a;
+            margin-top: 3rem;
+            font-size:18px;
+         }
+        h3 {
+            font-size:14px;
+        }
+        h4 {
+            color: #5f788a;
+        }
+    </style>
+
 
     <h1>Hello, {{ user.username|default:'Guest' }}!  </h1>
     {% for obj in bets %}
-        <style>
-            h2 {
-                background: #fafafa;
-                color: #333333;
-                margin-top: 3rem;
-                font-size:18px;
-            }
-            h3 {
-                font-size:14px;
-            }
-        </style>
+
         <h2>{{ obj.title }}</h2>
         <h3>{{ obj.description }}</h3>
         <form action="/createUserBet/{{ obj.id }}" method="post">

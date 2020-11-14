@@ -3,7 +3,8 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-    Hello, {{ user.username|default:'Guest' }}!
+
+    <h1>Hello, {{ user.username|default:'Guest' }}!  </h1>
     {% for obj in bets %}
         <style>
             h2 {
@@ -23,5 +24,8 @@
             {{ form }}
             <input type="submit" value="Submit">
         </form>
+
+
+
     {% endfor %}
 {% endblock %}

@@ -9,7 +9,8 @@ def home(request):
     return render(request, "users/home.html")
 
 def profile(request):
-    return render(request, "users/profile.html")
+    owned_bets = Bet.objects.filter(bet_owner_user_id=1)
+    return render(request, "users/profile.html", {'bets': owned_bets} )
 
 
 def dashboard(request):

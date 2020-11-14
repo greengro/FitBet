@@ -2,4 +2,25 @@
 
 {% block content %}
 <h1>This is your profile page!</h1>
+
+    <h1>Hello, {{ user.username|default:'Guest' }}!  </h1>
+    {% for obj in bets %}
+        <style>
+            h2 {
+                background: #fafafa;
+                color: #333333;
+                margin-top: 3rem;
+                font-size:18px;
+            }
+            h3 {
+                font-size:14px;
+            }
+        </style>
+        <h2>{{ obj.title }}</h2>
+        <h3>{{ obj.description }}</h3>
+
+
+
+    {% endfor %}
+
 {% endblock %}

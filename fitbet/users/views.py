@@ -11,10 +11,13 @@ def home(request):
     return render(request, "users/home.html")
 
 def profile(request):
-    owned_bets = Bet.objects.filter(bet_owner_user_id=1)
-    placed_bets = UserBet.objects.filter(user_id=1)
-    queryset = Bet.objects.prefetch_related(Prefetch('bet_owner_user_id', queryset=UserBet.objects.filter(user_id=1)))
-    return render(request, "users/profile.html", {'bets': owned_bets, 'placed': placed_bets, 'placed_desc': queryset})
+    owned_bets = Bet.objects.filter(bet_owner_user_id=request.user.id)
+    placed_bets = UserBet.objects.filter(user_id=request.user.id)
+    placed_bets_info = []
+    for x in placed_bets:
+        placed_bets_info.append(x.bet_id)
+
+    return render(request, "users/profile.html", {'bets': owned_bets, 'placed': placed_bets, 'placed_desc': placed_bets_info})
 
 
 def dashboard(request):

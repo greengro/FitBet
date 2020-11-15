@@ -9,7 +9,6 @@
          }
          h2 {
             color: #333333;
-            margin-top: 3rem;
             font-size:18px;
          }
         h3 {
@@ -35,21 +34,12 @@
 
     <h4>Bets that you are betting on </h4>
     {% for obj in placed %}
+    <p>
+        <h2>{{obj.bet_id.title}}</h2>
+        <h3>{{ obj.bet_id.description }}</h3>
 
-    <h2>{{ obj.amount_bet }}</h2>
-
-    {% endfor %}
-
-    <h4>Bets that you are betting on info attempt </h4>
-
-    {% for obj in placed_desc %}
-
-    <h2>{{ obj.title }}</h2>
-
-    <h3>{{ obj.description }}</h3>
-
-    <h2>{{ obj.amount_bet }}</h2>
-
+        <h2>Amount wagered:   {{ obj.amount_bet }} </h2>
+    </p>
 
     {% endfor %}
 

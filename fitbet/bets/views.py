@@ -45,4 +45,4 @@ def delete_bet(request, id):
     bet = Bet.objects.get(pk=id)
     bet.delete()
     print('bet is deleted')
-    return HttpResponse('deleted')
+    return HttpResponseRedirect('/profile')

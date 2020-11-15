@@ -28,6 +28,9 @@
     <label>
         <h2>{{ obj.title }}</h2>
         <h3>{{ obj.description }}</h3>
+<!--        deleteBet/{{obj.id}}-->
+        <p><a href="{% url 'deleteBet' obj.id %}">Delete Bet!</a></p>
+
     </label>
 
     {% endfor %}

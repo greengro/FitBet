@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import CreateBet, CreateUserBet
 from .models import Bet, UserBet
@@ -39,3 +39,10 @@ def create_userbet(request, bet_id):
         form = CreateUserBet()
 
     return render(request, 'create_userbet.html', {'form': form})
+
+
+def delete_bet(request, id):
+    bet = Bet.objects.get(pk=id)
+    bet.delete()
+    print('bet is deleted')
+    return HttpResponse('deleted')

@@ -12,7 +12,9 @@ def home(request):
     return render(request, "users/home.html")
 
 def house(request):
-    return render(request, "users/houseBets.html")
+    house_bets = Bet.objects.filter(bet_owner_user_id=1)
+    form = CreateUserBet()
+    return render(request, "users/houseBets.html", {'bets': house_bets, 'form': form})
 
 def profile(request):
     owned_bets = Bet.objects.filter(bet_owner_user_id=request.user.id)

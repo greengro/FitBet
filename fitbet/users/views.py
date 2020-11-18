@@ -1,5 +1,6 @@
 from django.contrib.auth import login
 from django.db.models import Prefetch
+from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -9,6 +10,9 @@ from bets.models import UserBet
 
 def home(request):
     return render(request, "users/home.html")
+
+def house(request):
+    return render(request, "users/houseBets.html")
 
 def profile(request):
     owned_bets = Bet.objects.filter(bet_owner_user_id=request.user.id)
@@ -34,3 +38,6 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+

@@ -40,7 +40,7 @@ def create_userbet(request, bet_id):
 
     return render(request, 'create_userbet.html', {'form': form})
 
-
+@login_required
 def delete_bet(request, id):
     bet = Bet.objects.get(pk=id)
     bet.delete()

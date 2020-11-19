@@ -1,10 +1,15 @@
 {% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
 {% block content %}
 
-<form action="/createBet/" method="post">
-    {% csrf_token %}
-    {{ form }}
+<div class="content-section">
+    <h1>Create a Bet</h1>
+    <form action="/createBet/" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
     <input type="submit" value="Submit">
 </form>
+</div>
+
 
 {% endblock %}

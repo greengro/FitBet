@@ -22,7 +22,8 @@
     {% for obj in bets %}
     <div class="content-section">
         <h1>{{ obj.title }}</h1>
-        <h3>{{ obj.description }}</h3>
+        <h3>Owner: {{ obj.bet_owner_user_id.username }}</h3>
+        <h3>Description: {{ obj.description }}</h3>
         <form action="/createUserBet/{{ obj.id }}" method="post">
             {% csrf_token %}
             {{ form|crispy }}

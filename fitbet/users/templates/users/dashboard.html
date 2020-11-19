@@ -1,7 +1,7 @@
 <!--users/templates/users/dashboard.html-->
 
 {% extends 'users/base.html' %}
-
+{% load crispy_forms_tags %}
 {% block content %}
     <style>
          h2 {
@@ -18,18 +18,16 @@
     </style>
 
 
-    <h1>Hello, {{ user.username|default:'Guest' }}!  </h1>
+    <h1>Bets Dashboard</h1>
     {% for obj in bets %}
-
-        <h2>{{ obj.title }}</h2>
+    <div class="content-section">
+        <h1>{{ obj.title }}</h1>
         <h3>{{ obj.description }}</h3>
         <form action="/createUserBet/{{ obj.id }}" method="post">
             {% csrf_token %}
-            {{ form }}
+            {{ form|crispy }}
             <input type="submit" value="Submit">
         </form>
-
-
-
+    </div>
     {% endfor %}
 {% endblock %}

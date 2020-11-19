@@ -7,6 +7,7 @@ from django.contrib import messages
 from bets.models import Bet
 from bets.forms import CreateUserBet
 from bets.models import UserBet
+from .models import Profile
 
 def home(request):
     return render(request, "users/home.html")
@@ -19,8 +20,8 @@ def house(request):
 def profile(request):
     owned_bets = Bet.objects.filter(bet_owner_user_id=request.user.id)
     placed_bets = UserBet.objects.filter(user_id=request.user.id)
-
-    return render(request, "users/profile.html", {'bets': owned_bets, 'placed': placed_bets})
+    user_info = Profile.objects.filter(user_id=request.user.id)
+    return render(request, "users/profile.html", {'bets': owned_bets, 'placed': placed_bets, "info":user_info})
 
 
 def dashboard(request):

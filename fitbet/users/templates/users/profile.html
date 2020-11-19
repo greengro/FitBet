@@ -21,9 +21,11 @@
 
     <h1>Hello, {{ user.username|default:'Guest' }} this is your profile page!  </h1>
 
+    <h4>Your total points: {{ info.first.points }} </h4> 
+    <h4>Your total steps: {{info.first.steps }}</h4>
+
     <h4>Bets that you have created </h4>
     {% for obj in bets %}
-
 
     <label>
         <h2>{{ obj.title }}</h2>

@@ -27,24 +27,24 @@
     <h4>Bets that you have created </h4>
     {% for obj in bets %}
 
-    <label>
+    <div class="content-section">
         <h2>{{ obj.title }}</h2>
         <h3>{{ obj.description }}</h3>
 <!--        deleteBet/{{obj.id}}-->
         <p><a href="{% url 'deleteBet' obj.id %}">Delete Bet!</a></p>
 
-    </label>
+    </div>
 
     {% endfor %}
 
     <h4>Bets that you are betting on </h4>
     {% for obj in placed %}
-    <p>
+    <div class="content-section">
         <h2>{{obj.bet_id.title}}</h2>
         <h3>{{ obj.bet_id.description }}</h3>
 
         <h2>Amount wagered:   {{ obj.amount_bet }} </h2>
-    </p>
+    </div>
 
     {% endfor %}
 

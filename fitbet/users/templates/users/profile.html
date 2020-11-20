@@ -1,5 +1,4 @@
 {% extends 'users/base.html' %}
-
 {% block content %}
     <style>
         label {
@@ -7,7 +6,11 @@
           width: 200px;
           padding: 25px;
          }
-         h2 {
+        h1{
+            text-align: center;
+            padding: 25px;
+        }
+        h2 {
             color: #333333;
             font-size:18px;
          }
@@ -15,38 +18,70 @@
             font-size:14px;
         }
         h4 {
+            padding-top: 15px;
+            padding-bottom: 15px;
             color: #5f788a;
+        }
+        .col-lg-5{
+            font-size: 20px;
+            border-style: solid;
+            border-width: 3px;
+            border-radius: 10px;
+            padding-bottom: 20px;
+        }
+        .num{
+            font-size: 60px;
+            font-style: bold;
         }
     </style>
 
-    <h1>Hello, {{ user.username|default:'Guest' }} this is your profile page!  </h1>
+    <h1>Hello, {{ user.username|default:'Guest' }} </h1>
 
-    <h4>Your total points: {{ info.first.points }} </h4> 
-    <h4>Your total steps: {{info.first.steps }}</h4>
+    <div class="row">
+        <div class="col-lg-5">
+            Your total points: 
+            <div class="num">{{ info.first.points }} </div>
+            <!-- Button doesn't do anything yet-->
+            <button type="button" class="btn btn-secondary">Top Off</button>
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-5">
+            Your total steps: 
+            <div class="num">{{info.first.steps }} </div>
+        </div>
+    </div>
 
     <h4>Bets that you have created </h4>
-    {% for obj in bets %}
+    
+    {% if bets %}
+        {% for obj in bets %}
 
-    <div class="content-section">
-        <h2>{{ obj.title }}</h2>
-        <h3>{{ obj.description }}</h3>
-<!--        deleteBet/{{obj.id}}-->
-        <p><a href="{% url 'deleteBet' obj.id %}">Delete Bet!</a></p>
+        <div class="content-section">
+            <h2>{{ obj.title }}</h2>
+            <h3>{{ obj.description }}</h3>
+    <!--        deleteBet/{{obj.id}}-->
+            <p><a href="{% url 'deleteBet' obj.id %}">Delete Bet!</a></p>
 
-    </div>
+        </div>
 
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <div class="content-section"> You don't have any active bets! <a href="{% url 'createBet' %}">Create Bet!</a></div>
+    {% endif %}
 
     <h4>Bets that you are betting on </h4>
-    {% for obj in placed %}
-    <div class="content-section">
-        <h2>{{obj.bet_id.title}}</h2>
-        <h3>{{ obj.bet_id.description }}</h3>
+    {% if placed %}
+        {% for obj in placed %}
+        <div class="content-section">
+            <h2>{{obj.bet_id.title}}</h2>
+            <h3>{{ obj.bet_id.description }}</h3>
 
-        <h2>Amount wagered:   {{ obj.amount_bet }} </h2>
-    </div>
-
-    {% endfor %}
+            <h2>Amount wagered:   {{ obj.amount_bet }} </h2>
+        </div>
+        {% endfor %}
+    {% else %}
+    <div class="content-section"> You aren't betting on any bets! <a href="{% url 'dashboard' %}">Find Bets!</a></div>
+    {% endif %}
 
 
 

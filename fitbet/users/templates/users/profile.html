@@ -53,36 +53,63 @@
 
     <h4>Bets that you have created </h4>
     
-    {% if bets %}
-        {% for obj in bets %}
-
+    {% for obj in bets %}
         <div class="content-section">
             <h2>{{ obj.title }}</h2>
-            <h3>{{ obj.description }}</h3>
+            <h3>Steps: {{obj.steps_wagered}}</h3> 
+            <h3>Description: {{ obj.description }}</h3>
     <!--        deleteBet/{{obj.id}}-->
-            <p><a href="{% url 'deleteBet' obj.id %}">Delete Bet!</a></p>
+            <p><a href="{% url 'deleteBet' obj.id %}">Delete Bet! </a><a href="{% url 'updateBet' obj.id %}">Update Bet!</a></p>
 
         </div>
 
-        {% endfor %}
-    {% else %}
+    {% empty %}
         <div class="content-section"> You don't have any active bets! <a href="{% url 'createBet' %}">Create Bet!</a></div>
-    {% endif %}
+    {% endfor %}
 
     <h4>Bets that you are betting on </h4>
-    {% if placed %}
-        {% for obj in placed %}
+    
+    {% for obj in placed %}
         <div class="content-section">
             <h2>{{obj.bet_id.title}}</h2>
-            <h3>{{ obj.bet_id.description }}</h3>
-
-            <h2>Amount wagered:   {{ obj.amount_bet }} </h2>
+            <h3>Steps: {{obj.bet_id.steps_wagered}}</h3> 
+            <h3>Description: {{ obj.bet_id.description }}</h3>
+            <h3>Amount wagered:   {{ obj.amount_bet }} 
+                {% if obj.betting_against %}
+                AGAINST
+                {% else %}
+                FOR
+                {% endif %}
+            </h3>
         </div>
-        {% endfor %}
-    {% else %}
+    {% empty %}
     <div class="content-section"> You aren't betting on any bets! <a href="{% url 'dashboard' %}">Find Bets!</a></div>
-    {% endif %}
+    {% endfor %}
 
-
-
+    <h4>Finished bets that you bet on</h4>
+        
+    {% for obj in old_placed %}
+        <div class="content-section">
+            <h2>{{obj.bet_id.title}}</h2>
+            <h3>Steps: {{obj.bet_id.steps_wagered}}</h3> 
+            <h3>Description: {{ obj.bet_id.description }}</h3>
+            <h3>Amount wagered:   {{ obj.amount_bet }} 
+                {% if obj.betting_against %}
+                AGAINST
+                {% else %}
+                FOR
+                {% endif %}
+            </h3>
+            <h3> Result: 
+                {% if obj.bet_id.achieved_goal != obj.betting_against %}
+                WIN
+                {% else %}
+                LOSE
+                {% endif %}
+            </h3>
+            <h3> Payout: Implement this later lol</h3>
+        </div>
+    {% empty %}
+    <div class="content-section"> You don't have any finished bets yet! Sit tight! </div>
+    {% endfor %}
 {% endblock %}

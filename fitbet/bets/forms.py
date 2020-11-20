@@ -28,3 +28,8 @@ class CreateUserBet(ModelForm):
             raise ValidationError("Non-positive number of steps")
 
         return amount
+
+class UpdateBet(ModelForm):
+    class Meta:
+        model = Bet
+        fields = ['achieved_goal']

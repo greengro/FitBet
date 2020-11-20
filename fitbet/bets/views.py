@@ -1,6 +1,6 @@
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
-from .forms import CreateBet, CreateUserBet
+from .forms import CreateBet, CreateUserBet, UpdateBet
 from .models import Bet, UserBet
 from django.contrib.auth.decorators import login_required
 
@@ -46,3 +46,22 @@ def delete_bet(request, id):
     bet.delete()
     print('bet is deleted')
     return HttpResponseRedirect('/profile')
+
+@login_required
+def update_bet(request, id):
+    # if this is a POST request we need to process the form data
+    bet_instance = Bet.objects.get(pk=id)
+    if request.method == 'POST':
+        form = UpdateBet(request.POST,instance=bet_instance)
+
+        if form.is_valid():
+            bet = form.save(commit=False)
+            bet.active = False
+            print('bet is updated')
+            bet.save()
+            return HttpResponseRedirect('/profile')
+    else:
+        form = UpdateBet(instance=bet_instance)
+
+    bet = Bet.objects.get(pk=id)
+    return render(request, 'update_bet.html', {'form': form, 'bet': bet})

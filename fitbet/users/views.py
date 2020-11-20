@@ -18,16 +18,18 @@ def house(request):
     return render(request, "users/houseBets.html", {'bets': house_bets, 'form': form})
 
 def profile(request):
-    owned_bets = Bet.objects.filter(bet_owner_user_id=request.user.id)
-    placed_bets = UserBet.objects.filter(user_id=request.user.id)
+    active_owned_bets = Bet.objects.filter(bet_owner_user_id=request.user.id).filter(active=True)
+    active_placed_bets = UserBet.objects.filter(user_id=request.user.id).filter(bet_id__active=True)
+    # Should probably order this from newest to oldest
+    finished_placed_bets = UserBet.objects.filter(user_id=request.user.id).filter(bet_id__active=False)
     user_info = Profile.objects.filter(user_id=request.user.id)
-    return render(request, "users/profile.html", {'bets': owned_bets, 'placed': placed_bets, "info":user_info})
+    return render(request, "users/profile.html", {'bets': active_owned_bets, 'placed': active_placed_bets, "info":user_info, 'old_placed': finished_placed_bets})
 
 
 def dashboard(request):
-    all_bets = Bet.objects.all()
+    all_active_bets = Bet.objects.all().filter(active=True)
     form = CreateUserBet()
-    return render(request, "users/dashboard.html", {'bets': all_bets, 'form': form})
+    return render(request, "users/dashboard.html", {'bets': all_active_bets, 'form': form})
 
 
 def register(request):
@@ -41,6 +43,5 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
-
 
 

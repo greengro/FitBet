@@ -30,5 +30,7 @@
             <input type="submit" value="Submit">
         </form>
     </div>
+    {% empty %}
+    <div class="content-section"> No one has made a bet yet! You could be the first! <a href="{% url 'createBet' %}">Create Bet!</a></div>
     {% endfor %}
 {% endblock %}

@@ -28,8 +28,8 @@
             <input type="submit" value="Submit">
         </form>
 
-
-
+    {% empty %}
+        <div class="content-section"> There are no house bets yet! Come back later! </div>
     {% endfor %}
 
 {% endblock %}

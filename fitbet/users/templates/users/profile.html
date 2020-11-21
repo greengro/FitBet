@@ -37,6 +37,7 @@
 
     <h1>Hello, {{ user.username|default:'Guest' }} </h1>
 
+
     <div class="row">
         <div class="col-lg-5">
             Your total points: 
@@ -47,7 +48,7 @@
         <div class="col-lg-2"></div>
         <div class="col-lg-5">
             Your total steps: 
-            <div class="num">{{info.first.steps }} </div>
+            <div class="num">{{ steps }} </div>
         </div>
     </div>
 

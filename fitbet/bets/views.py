@@ -4,6 +4,8 @@ from .forms import CreateBet, CreateUserBet, UpdateBet
 from .models import Bet, UserBet
 from django.contrib.auth.decorators import login_required
 
+
+
 @login_required
 def create_bet(request):
     # if this is a POST request we need to process the form data
@@ -59,8 +61,6 @@ def update_bet(request, id):
             bet.active = False
             print('bet is updated')
             bet.save()
-            print(request.user.steps)
-
             return HttpResponseRedirect('/profile')
     else:
         form = UpdateBet(instance=bet_instance)

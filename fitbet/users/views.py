@@ -20,18 +20,18 @@ def house(request):
     return render(request, "users/houseBets.html", {'bets': house_bets, 'form': form})
 
 
-def profile(request):
-    active_owned_bets = Bet.objects.filter(bet_owner_user_id=request.user.id).filter(active=True)
-    active_placed_bets = UserBet.objects.filter(user_id=request.user.id).filter(bet_id__active=True)
-    success_bets = Bet.objects.filter(bet_owner_user_id=request.user.id).filter(active=False).filter(achieved_goal=True)
+def profile(request, id):
+    active_owned_bets = Bet.objects.filter(bet_owner_user_id=id).filter(active=True)
+    active_placed_bets = UserBet.objects.filter(user_id=id).filter(bet_id__active=True)
+    success_bets = Bet.objects.filter(bet_owner_user_id=id).filter(active=False).filter(achieved_goal=True)
     steps = 0
     for obj in success_bets:
         steps += obj.steps_wagered
     # Should probably order this from newest to oldest
-    finished_placed_bets = UserBet.objects.filter(user_id=request.user.id).filter(bet_id__active=False)
-    user_info = Profile.objects.filter(user_id=request.user.id)
+    finished_placed_bets = UserBet.objects.filter(user_id=id).filter(bet_id__active=False)
+    user_info = Profile.objects.filter(user_id=id)
     return render(request, "users/profile.html", {'bets': active_owned_bets, 'placed': active_placed_bets,
-                                                  "info": user_info, 'old_placed': finished_placed_bets,
+                                                  'info': user_info, 'old_placed': finished_placed_bets,
                                                   'steps': steps})
 
 

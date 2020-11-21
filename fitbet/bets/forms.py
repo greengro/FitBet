@@ -33,3 +33,4 @@ class UpdateBet(ModelForm):
     class Meta:
         model = Bet
         fields = ['achieved_goal']
+

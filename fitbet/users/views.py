@@ -23,7 +23,8 @@ def profile(request):
     # Should probably order this from newest to oldest
     finished_placed_bets = UserBet.objects.filter(user_id=request.user.id).filter(bet_id__active=False)
     user_info = Profile.objects.filter(user_id=request.user.id)
-    return render(request, "users/profile.html", {'bets': active_owned_bets, 'placed': active_placed_bets, "info":user_info, 'old_placed': finished_placed_bets})
+    return render(request, "users/profile.html", {'bets': active_owned_bets, 'placed': active_placed_bets,
+                                                  "info": user_info, 'old_placed': finished_placed_bets})
 
 
 def dashboard(request):

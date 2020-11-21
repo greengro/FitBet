@@ -59,6 +59,8 @@ def update_bet(request, id):
             bet.active = False
             print('bet is updated')
             bet.save()
+            print(request.user.steps)
+
             return HttpResponseRedirect('/profile')
     else:
         form = UpdateBet(instance=bet_instance)

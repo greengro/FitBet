@@ -2,8 +2,22 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
+<style>
+    h1{
+        text-align: center;
+        padding: 25px;
+    }
+    h2 {
+        font-size:18px;
+    }
+    h3 {
+        font-size:14px;
+    }
+</style>
+
+<h1>Update your Bet</h1>
+
 <div class="content-section">
-    <h1>Update your Bet</h1>
     <h2>Title: {{ bet.title }}</h2>
     <h3>Steps: {{ bet.steps_wagered }}</h3> 
     <h3>Description: {{ bet.description }}</h3>

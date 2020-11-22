@@ -51,7 +51,7 @@ def delete_bet(request, id):
     bet = Bet.objects.get(pk=id)
     bet.delete()
     print('bet is deleted')
-    return HttpResponseRedirect('/profile')
+    return HttpResponseRedirect('/profile/' + str(request.user.id))
 
 @login_required
 def update_bet(request, id):

@@ -43,9 +43,11 @@
     </div>
     {% endif %}
 
-    <h1>Hello, {{ user.username|default:'Guest' }} </h1>
     {% if owner.username != user.username %}
         <h1>{{ owner.username }}'s Profile</h1>
+    {% else %}
+    <h1>Hello, {{ user.username|default:'Guest' }} </h1>
+
     {% endif %}
 
 
@@ -78,12 +80,16 @@
             <h3>Steps: {{obj.steps_wagered}}</h3> 
             <h3>Description: {{ obj.description }}</h3>
     <!--        deleteBet/{{obj.id}}-->
+            {% if owner.username == user.username %}
             <p><a href="{% url 'deleteBet' obj.id %}">Delete Bet! </a><a href="{% url 'updateBet' obj.id %}">Update Bet!</a></p>
+            {% endif %}
 
         </div>
 
     {% empty %}
+        {% if owner.username == user.username %}
         <div class="content-section"> You don't have any active bets! <a href="{% url 'createBet' %}">Create Bet!</a></div>
+        {% endif %}
     {% endfor %}
 
     {% if owner.username != user.username %}

@@ -55,11 +55,12 @@
         <div class="col-lg-5">
             Total points:
             <div class="num">{{ info.points }} </div>
-            <!-- Button doesn't do anything yet-->
+            {% if owner.username == user.username %}
             <form action="/profile/{{ user_id }}" method="post">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-secondary">Top Off</button>
             </form>
+            {% endif %}
         </div>
         <div class="col-lg-2"></div>
         <div class="col-lg-5">
@@ -101,7 +102,7 @@
 
     {% for obj in placed %}
         <div class="content-section">
-            <h2>{{obj.bet_id.title}} by {{obj.user_id}}</h2>
+            <h2>{{obj.bet_id.title}} by <a href="{% url 'profile' obj.bet_id.bet_owner_user_id.id %}">{{obj.bet_id.bet_owner_user_id}}</a></h2>
             <h3>Steps: {{obj.bet_id.steps_wagered}}</h3> 
             <h3>Description: {{ obj.bet_id.description }}</h3>
             <h3>Amount wagered:   {{ obj.amount_bet }} 
@@ -126,7 +127,7 @@
 
     {% for obj in old_placed %}
         <div class="content-section">
-            <h2>{{obj.bet_id.title}} by {{obj.user_id}}</h2>
+            <h2>{{obj.bet_id.title}} by <a href="{% url 'profile' obj.bet_id.bet_owner_user_id.id %}">{{obj.bet_id.bet_owner_user_id}}</a></h2>
             <h3>Steps: {{obj.bet_id.steps_wagered}}</h3> 
             <h3>Description: {{ obj.bet_id.description }}</h3>
             <h3>Amount wagered:   {{ obj.amount_bet }} 

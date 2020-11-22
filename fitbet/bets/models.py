@@ -20,4 +20,4 @@ class UserBet(models.Model):
     bet_id = models.ForeignKey(Bet, on_delete=models.CASCADE)
     amount_bet = models.IntegerField()
     betting_against = models.BooleanField()
-    payout = models.IntegerField()
+    payout = models.IntegerField(default=0)

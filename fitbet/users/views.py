@@ -57,3 +57,7 @@ def register(request):
     else:
         form = UserCreationForm()
     return render(request, 'users/register.html', {'form': form})
+
+
+def search(request):
+    pass

@@ -25,6 +25,9 @@ def profile(request, id):
         if(profile.points < 500):
             profile.points = 500
             profile.save()
+            messages.success(request, f'Your points have been topped off!')
+        else:
+            messages.warning(request, f'You cannot top off if you have 500 or more points')
 
     active_owned_bets = Bet.objects.filter(bet_owner_user_id=id).filter(active=True)
     active_placed_bets = UserBet.objects.filter(user_id=id).filter(bet_id__active=True)

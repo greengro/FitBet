@@ -35,6 +35,14 @@
         }
     </style>
 
+    {% if messages %}
+    <div class="content-section">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <h1>Hello, {{ user.username|default:'Guest' }} </h1>
 
 

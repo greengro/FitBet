@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from django.db.models import Prefetch
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -8,6 +8,8 @@ from bets.models import Bet
 from bets.forms import CreateUserBet
 from bets.models import UserBet
 from .models import Profile
+from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
     return render(request, "users/home.html")
@@ -60,4 +62,12 @@ def register(request):
 
 
 def search(request):
-    pass
+    username = request.GET['u']
+    user = None
+    try:
+        user = User.objects.get(username=username)
+        id = user.id
+        return redirect('profile', id)
+    except ObjectDoesNotExist:
+        messages.error(request, "That user does not exist! Please try searching again.")
+    return redirect('dashboard')

@@ -61,18 +61,44 @@ def update_bet(request, id):
         form = UpdateBet(request.POST,instance=bet_instance)
 
         if form.is_valid():
+            # Save information about bet
             bet = form.save(commit=False)
             bet.active = False
             bet.save()
             print('bet is updated')
+            # Update steps on user's profile
             if(bet.achieved_goal):
                 profile = Profile.objects.filter(user=request.user).first()
                 profile.steps += bet.steps_wagered
                 profile.save()
                 print('profile is updated')
+            # Update points for bet participants
+            for userBet in UserBet.objects.filter(bet_id=bet_instance):
+                payout = calculatePayout(userBet, bet)
+                userBet.payout = payout
+                userBet.save()
+                profile = Profile.objects.get(user=userBet.user_id)
+                profile.points += payout
+                profile.save()
+
             return HttpResponseRedirect('/profile/' + str(request.user.id))
     else:
         form = UpdateBet(instance=bet_instance)
 
     bet = Bet.objects.get(pk=id)
     return render(request, 'update_bet.html', {'form': form, 'bet': bet})
+
+def calculatePayout(userBet, bet_instance):
+    potWon = 0
+    potLost = 0
+    for tempUserBet in UserBet.objects.filter(bet_id=bet_instance):
+        if(bet_instance.achieved_goal != tempUserBet.betting_against):
+            potWon += tempUserBet.amount_bet
+        else: potLost += tempUserBet.amount_bet
+    payoutRatio = potLost / potWon
+    if(bet_instance.achieved_goal != userBet.betting_against):
+    #   print(str(userBet.user_id) + " won the bet")
+        return int(userBet.amount_bet * (1 + payoutRatio))
+    else:
+    #   print(str(userBet.user_id) + " lost the bet")
+        return 0

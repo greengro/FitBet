@@ -2,9 +2,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from .forms import CreateBet, CreateUserBet, UpdateBet
 from .models import Bet, UserBet
+from users.models import Profile
 from django.contrib.auth.decorators import login_required
-
-
 
 @login_required
 def create_bet(request):
@@ -28,19 +27,24 @@ def create_userbet(request, bet_id):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         form = CreateUserBet(request.POST)
+        profile = Profile.objects.filter(user=request.user).first()
+        form.setPoints(profile.points)
 
         if form.is_valid():
             bet = form.save(commit=False)
             bet.user_id = request.user
             bet.bet_id = Bet.objects.get(pk=bet_id)
-            print('bet is ', bet)
+            profile = Profile.objects.filter(user=request.user).first()
+            profile.points -= bet.amount_bet
             bet.save()
-
+            print('bet is ', bet)
+            profile.save()
+            print('profile')
             return HttpResponseRedirect('/dashboard')
     else:
         form = CreateUserBet()
 
-    return render(request, 'create_userbet.html', {'form': form})
+    return render(request, 'create_userbet.html', {'form': form, 'bet_id': bet_id})
 
 @login_required
 def delete_bet(request, id):
@@ -59,9 +63,14 @@ def update_bet(request, id):
         if form.is_valid():
             bet = form.save(commit=False)
             bet.active = False
-            print('bet is updated')
             bet.save()
-            return HttpResponseRedirect('/profile/' + id)
+            print('bet is updated')
+            if(bet.achieved_goal):
+                profile = Profile.objects.filter(user=request.user).first()
+                profile.steps += bet.steps_wagered
+                profile.save()
+                print('profile is updated')
+            return HttpResponseRedirect('/profile/' + str(request.user.id))
     else:
         form = UpdateBet(instance=bet_instance)
 

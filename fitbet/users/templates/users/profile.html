@@ -41,14 +41,17 @@
     <div class="row">
         <div class="col-lg-5">
             Your total points: 
-            <div class="num">{{ info.first.points }} </div>
+            <div class="num">{{ info.points }} </div>
             <!-- Button doesn't do anything yet-->
-            <button type="button" class="btn btn-secondary">Top Off</button>
+            <form action="/profile/{{ user_id }}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-secondary">Top Off</button>
+            </form>
         </div>
         <div class="col-lg-2"></div>
         <div class="col-lg-5">
             Your total steps: 
-            <div class="num">{{ steps }} </div>
+            <div class="num">{{ info.steps }} </div>
         </div>
     </div>
 

@@ -90,6 +90,8 @@
     {% empty %}
         {% if owner.username == user.username %}
         <div class="content-section"> You don't have any active bets! <a href="{% url 'createBet' %}">Create Bet!</a></div>
+        {% else %}
+        <div class="content-section"> {{owner.username}} doesn't have any active bets!</div>
         {% endif %}
     {% endfor %}
 
@@ -114,7 +116,11 @@
             </h3>
         </div>
     {% empty %}
-    <div class="content-section"> You aren't betting on any bets! <a href="{% url 'dashboard' %}">Find Bets!</a></div>
+        {% if owner.username == user.username %}
+        <div class="content-section"> You aren't betting on any bets! <a href="{% url 'dashboard' %}">Find Bets!</a></div>
+        {% else %}
+        <div class="content-section"> {{owner.username}} isn't betting on any bets!</div>
+        {% endif %}
     {% endfor %}
 
 
@@ -147,6 +153,10 @@
             <h3> Payout: {{ obj.payout }}</h3>
         </div>
     {% empty %}
-    <div class="content-section"> You don't have any finished bets yet! Sit tight! </div>
+        {% if owner.username == user.username %}
+        <div class="content-section"> You don't have any finished bets yet! Sit tight! </div>
+        {% else %}
+        <div class="content-section"> {{owner.username}} doesn't have any finished bets!</div>
+        {% endif %}
     {% endfor %}
 {% endblock %}

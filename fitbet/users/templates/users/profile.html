@@ -44,11 +44,14 @@
     {% endif %}
 
     <h1>Hello, {{ user.username|default:'Guest' }} </h1>
+    {% if owner.username != user.username %}
+        <h1>{{ owner.username }}'s Profile</h1>
+    {% endif %}
 
 
     <div class="row">
         <div class="col-lg-5">
-            Your total points: 
+            Total points:
             <div class="num">{{ info.points }} </div>
             <!-- Button doesn't do anything yet-->
             <form action="/profile/{{ user_id }}" method="post">
@@ -58,13 +61,17 @@
         </div>
         <div class="col-lg-2"></div>
         <div class="col-lg-5">
-            Your total steps: 
+            Total steps:
             <div class="num">{{ info.steps }} </div>
         </div>
     </div>
 
-    <h4>Bets that you have created </h4>
-    
+    {% if owner.username != user.username %}
+        <h4>Bets that {{owner.username}} has created </h4>
+    {% else %}
+        <h4>Bets that you have created </h4>
+    {% endif %}
+
     {% for obj in bets %}
         <div class="content-section">
             <h2>{{ obj.title }}</h2>
@@ -79,8 +86,13 @@
         <div class="content-section"> You don't have any active bets! <a href="{% url 'createBet' %}">Create Bet!</a></div>
     {% endfor %}
 
-    <h4>Bets that you are betting on </h4>
-    
+    {% if owner.username != user.username %}
+        <h4>Bets that {{owner.username}} is betting on </h4>
+    {% else %}
+        <h4>Bets that you are betting on </h4>
+    {% endif %}
+
+
     {% for obj in placed %}
         <div class="content-section">
             <h2>{{obj.bet_id.title}} by {{obj.user_id}}</h2>
@@ -98,8 +110,14 @@
     <div class="content-section"> You aren't betting on any bets! <a href="{% url 'dashboard' %}">Find Bets!</a></div>
     {% endfor %}
 
-    <h4>Finished bets that you bet on</h4>
-        
+
+    {% if owner.username != user.username %}
+        <h4>Finished bets that {{owner.username}} bet on</h4>
+    {% else %}
+        <h4>Finished bets that you bet on</h4>
+    {% endif %}
+
+
     {% for obj in old_placed %}
         <div class="content-section">
             <h2>{{obj.bet_id.title}} by {{obj.user_id}}</h2>

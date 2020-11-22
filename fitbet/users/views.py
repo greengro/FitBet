@@ -23,6 +23,7 @@ def house(request):
 
 def profile(request, id):
     profile = Profile.objects.filter(user=id).first()
+    owner = User.objects.get(pk=id)
     if request.method == 'POST':
         if(profile.points < 500):
             profile.points = 500
@@ -36,7 +37,7 @@ def profile(request, id):
     finished_placed_bets = UserBet.objects.filter(user_id=id).filter(bet_id__active=False).order_by('-bet_id__date_created')
     return render(request, "users/profile.html", {'bets': active_owned_bets, 'placed': active_placed_bets,
                                                   'info': profile, 'old_placed': finished_placed_bets,
-                                                  'user_id': request.user.id})
+                                                  'user_id': request.user.id, 'owner': owner})
 
 def dashboard(request):
     all_active_bets = Bet.objects.all().filter(active=True).order_by('-date_created')

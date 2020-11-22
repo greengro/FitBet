@@ -29,17 +29,19 @@ def profile(request, id):
         else:
             messages.warning(request, f'You cannot top off if you have 500 or more points')
 
-    active_owned_bets = Bet.objects.filter(bet_owner_user_id=id).filter(active=True)
-    active_placed_bets = UserBet.objects.filter(user_id=id).filter(bet_id__active=True)
-    success_bets = Bet.objects.filter(bet_owner_user_id=id).filter(active=False).filter(achieved_goal=True)
-    finished_placed_bets = UserBet.objects.filter(user_id=id).filter(bet_id__active=False)
+    active_owned_bets = Bet.objects.filter(bet_owner_user_id=id).filter(active=True).order_by('-date_created')
+    active_placed_bets = UserBet.objects.filter(user_id=id).filter(bet_id__active=True).order_by('-bet_id__date_created')
+    finished_placed_bets = UserBet.objects.filter(user_id=id).filter(bet_id__active=False).order_by('-bet_id__date_created')
     return render(request, "users/profile.html", {'bets': active_owned_bets, 'placed': active_placed_bets,
                                                   'info': profile, 'old_placed': finished_placed_bets,
                                                   'user_id': request.user.id})
 
-
 def dashboard(request):
-    all_active_bets = Bet.objects.all().filter(active=True)
+    all_active_bets = Bet.objects.all().filter(active=True).order_by('-date_created')
+    # Filter so you can't bet on the same bet twice
+    if(request.user.is_authenticated):
+        for userBet in UserBet.objects.all().filter(user_id=request.user).filter(bet_id__active=True):
+            all_active_bets = all_active_bets.exclude(id=userBet.bet_id.id)
     form = CreateUserBet()
     return render(request, "users/dashboard.html", {'bets': all_active_bets, 'form': form})
 

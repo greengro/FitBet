@@ -83,7 +83,7 @@
     
     {% for obj in placed %}
         <div class="content-section">
-            <h2>{{obj.bet_id.title}}</h2>
+            <h2>{{obj.bet_id.title}} by {{obj.user_id}}</h2>
             <h3>Steps: {{obj.bet_id.steps_wagered}}</h3> 
             <h3>Description: {{ obj.bet_id.description }}</h3>
             <h3>Amount wagered:   {{ obj.amount_bet }} 
@@ -102,7 +102,7 @@
         
     {% for obj in old_placed %}
         <div class="content-section">
-            <h2>{{obj.bet_id.title}}</h2>
+            <h2>{{obj.bet_id.title}} by {{obj.user_id}}</h2>
             <h3>Steps: {{obj.bet_id.steps_wagered}}</h3> 
             <h3>Description: {{ obj.bet_id.description }}</h3>
             <h3>Amount wagered:   {{ obj.amount_bet }} 

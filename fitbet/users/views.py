@@ -16,7 +16,8 @@ def home(request):
 
 
 def house(request):
-    house_bets = Bet.objects.filter(bet_owner_user_id=1)
+    house_id = User.objects.filter(username='HouseBets').first()
+    house_bets = Bet.objects.filter(bet_owner_user_id=house_id)
     form = CreateUserBet()
     return render(request, "users/houseBets.html", {'bets': house_bets, 'form': form})
 

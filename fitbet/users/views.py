@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 
 def home(request):
-    return render(request, "users/home.html")
+    return redirect('dashboard')
 
 
 def house(request):
